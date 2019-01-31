@@ -1,0 +1,89 @@
+{% extends 'llbase.html' %}
+<!DOCTYPE html>
+<html class="nkr-html">
+	<head>
+		{% block head %}
+		<title>Home</title>
+		{% endblock %}
+	</head>
+	<body>
+	{% block body %}
+		<div class="individual_product_page_body">
+					<div class="individual_product_page_picture">
+						<!-- Slide Show Pictures -->
+						<div class="slideshow-container">
+							<div class="slides">
+								<img src="/static/images/ball1.jpg" style="width: 400px;">
+							</div>
+							<div class="slides fadeAnimation">
+								<img src="/static/images/ball2.jpg" style="width: 400px;">
+							</div>
+							<div class="slides fadeAnimation">
+								<img src="/static/images/ball3.jpg" style="width: 400px;">
+							</div>
+							<div class="slides fadeAnimation">
+								<img src="/static/images/ball4.jpg" style="width: 400px;">
+							</div>
+							<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  							<a class="next" onclick="plusSlides(1)">&#10095;</a>
+						</div>
+						<div style="text-align:center">
+							<span class="dot" onclick="currentSlide(1)"></span> 
+							<span class="dot" onclick="currentSlide(2)"></span> 
+							<span class="dot" onclick="currentSlide(3)"></span> 
+							<span class="dot" onclick="currentSlide(4)"></span> 
+						</div>
+					</div>
+					<div class="individual_product_page_text">
+						<p class="individual_product_title">{{name}}</p>
+						<p class="individual_product_price">${{price|floatformat:2}}</p>
+						<p class="individual_product_description">{{description}}</p>
+						<div class="paypal_button">{{paypal_button|safe}}</div>
+					</div>
+		</div>
+	</body>
+	<script>
+		// Used to change paypal button to custom button
+		window.onload = function() {
+			button=document.getElementsByName("submit")[1]
+			button.src= "/static/images/add_to_cart.png";
+			button.style="height: 3.5rem;"
+		}
+	
+		var slideIndex = 1;
+		showSlides(slideIndex);
+
+		// Next/previous controls
+		function plusSlides(n) {
+		showSlides(slideIndex += n);
+		}
+
+		// Thumbnail image controls
+		function currentSlide(n) {
+		showSlides(slideIndex = n);
+		}
+
+		function showSlides(n) {
+		var i;
+		var slides = document.getElementsByClassName("slides");
+		var dots = document.getElementsByClassName("dot");
+		if (n > slides.length) {slideIndex = 1} 
+		if (n < 1) {slideIndex = slides.length}
+		for (i = 0; i < slides.length; i++) {
+			slides[i].style.display = "none"; 
+		}
+		for (i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(" active", "");
+		}
+		slides[slideIndex-1].style.display = "block"; 
+		dots[slideIndex-1].className += " active";
+		}
+	
+	</script>
+	{% endblock %}
+	<footer>
+	{% block footer %}
+	{% include 'Lunar_Lovelies/footer.html' %}
+	{% endblock %}
+	</footer>
+</html>

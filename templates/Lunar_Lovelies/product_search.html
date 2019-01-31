@@ -1,0 +1,30 @@
+{% extends 'llbase.html' %}
+<!DOCTYPE html>
+<html class="nkr-html">
+	<head>
+		{% block head %}
+		<title>Home</title>
+		{% endblock %}
+	</head>
+	<body>
+	{% block body %}
+	<table class="products-table">
+		<tr class="products-row"></tr>
+		<tr class="products-row">
+			<td class="products-data products-list">
+				<div class="container-fluid products-container">
+					<ul class="products-ul" style="width:2000">
+						{{products_list | safe}}
+					</ul>
+				</div>
+			</td>
+		</tr>
+	</table>
+	{% endblock %}
+	</body>
+	<footer>
+	{% block footer %}
+	{% include 'Lunar_Lovelies/footer.html' %}
+	{% endblock %}
+	</footer>
+</html>

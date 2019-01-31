@@ -1,0 +1,134 @@
+{% extends 'llbase.html' %}
+<!DOCTYPE html>
+<html class="nkr-html">
+	<head>
+		{% block head %}
+		<title>Home</title>
+		{% endblock %}
+	</head>
+	<body onload="get_urls()">
+	{% block body %}
+	<nav class="sub-nav" id="sub-nav">
+		<ul class="ml-auto sub-nav-ul">
+			<a href="/LunarLovelies/products/collections/his/" id="sub-nav-link" class="sub-nav-link {% if collection_name == "clothes" %}sub-nav-active{% endif %}" style="border: none;"><li class="nav-item sub-nav-item">Mens</li></a>
+			<a href="/LunarLovelies/products/collections/hers/" id="sub-nav-link" class="sub-nav-link {% if collection_name == "home-goods" %}sub-nav-active{% endif %}"><li class="nav-item sub-nav-item">Womens</li></a>
+			<a href="/LunarLovelies/products/collections/pets/" id="sub-nav-link" class="sub-nav-link {% if collection_name == "wall-art" %}sub-nav-active{% endif %}"><li class="nav-item sub-nav-item">Pets</li></a>
+			<a href="/LunarLovelies/products/collections/crafts/" id="sub-nav-link" class="sub-nav-link {% if collection_name == "crafts" %}sub-nav-active{% endif %}"><li class="nav-item sub-nav-item">Crafts</li></a>
+		</ul>
+	</nav>
+
+	<!-- Filter - only appears when category selected -->
+	<button id="filterbutton" onclick="filtertoggler()" class="filterbutton navbar-toggler navbar-dark collapsed filter-toggler filteroff" 
+	data-toggle="collapse" data-target="#filterCollapse" type="button" aria-expanded="false" style="display: {% if  collection_name == 'none' %}none{% endif %};">
+		Filter
+		<span></span>
+	</button>
+	<div class="filter navbar-collapse collapse" id="filterCollapse">
+		<table>
+			<tr class="filter-row">
+				{% if 'clothes' in collection_name%} 
+				<td class="filter-column">
+					<ul class="filter-ul" id="filter-ul">
+						<h2>Category</h2>
+						<a id="dress+" href="" class="filter-a"><li class="filter-li {% if 'dress' in filters %} filter-active{% endif %}" >Dress</li></a>
+						<a id="shirt+" href="" class="filter-a"><li class="filter-li {% if 'shirt' in filters %} filter-active{% endif %}">Shirt</li></a>
+						<a id="sneaker+" href="" class="filter-a"><li class="filter-li {% if 'sneaker' in filters %} filter-active{% endif %}">Sneaker</li></a>
+					</ul>
+				</td>
+				{% endif %}
+				{% if collection_name != 'clothes'%} 
+				<td class="filter-column">
+					<ul class="filter-ul" id="filter-ul">
+						<h2>Category</h2>
+						<a id="ball+" href="" class="filter-a"><li class="filter-li {% if 'ball' in filters %} filter-active{% endif %}" >Other1</li></a>
+						<a id="dress+" href="" class="filter-a"><li class="filter-li {% if 'dress' in filters %} filter-active{% endif %}">Other2</li></a>
+						<a id="sneaker+" href="" class="filter-a"><li class="filter-li {% if 'sneaker' in filters %} filter-active{% endif %}">Other3</li></a>
+					</ul>
+				</td>
+				{% endif %}
+				<td class="filter-column">
+					<ul class="filter-ul" id="filter-ul">
+						<h2>Sort</h2>
+						<a id="price-high-low" href="" class="sort-a"><li class="filter-li {% if 'price-high-low' in sorter %} filter-active{% endif %}" >Price: High to Low</li></a>
+						<a id="price-low-high" href="" class="sort-a"><li class="filter-li {% if 'price-low-high' in sorter %} filter-active{% endif %}">Price: Low to High</li></a>
+						<a id="new-old" href="" class="sort-a"><li class="filter-li {% if 'new-old' in sorter %} filter-active{% endif %}">Newer to Older</li></a>
+						<a id="old-new" href="" class="sort-a"><li class="filter-li {% if 'old-new' in sorter %} filter-active{% endif %}">Older to Newer</li></a>
+					</ul>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<table class="products-table" id="products-table">
+		<tr class="products-row">
+			<!--<td class="products-data products-filter">
+				<div class="container-fluid products-container">
+					<form method="post" name="product_filter">
+						{% csrf_token %}
+						{{ form.as_p }}
+						<input type="hidden" name="product_matches" value="{{product_matches}}">
+						<input type=submit name="product_filter" value="Filter">
+					</form>
+				</div>
+			</td>-->
+			<td class="products-data products-list">
+				<div class="container-fluid products-container">
+					<ul class="products-ul" style="width:2000">
+						{{products_list | safe}}
+					</ul>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<script>
+		function filtertoggler() {
+		  var elem=document.getElementById("filterbutton");
+		  if (elem.classList.contains("filteron")) {
+			elem.classList.add("filteroff");
+			elem.classList.remove("filteron");
+		  } else {
+			elem.classList.add("filteron");
+			elem.classList.remove("filteroff");
+		  }
+		}
+	window.onload = function() {get_urls()};
+
+	function get_urls() {
+			var items=document.getElementsByClassName("filter-a");
+			for (var i=0; i<items.length; i++) {
+				if ("{{filters}}"==items[i].id){
+					newfilter="/LunarLovelies/products/collections/".concat("{{collection_name}}");
+					if ("{{sorter}}"!="None"){
+					newfilter=newfilter.concat("/sort/{{sorter}}");
+					}
+				} else if  ("{{filters}}".includes(items[i].id)) {
+					newfilter="{{filters}}".replace(items[i].id,'');
+				} else if  ("{{filters}}"=="None") {
+					newfilter=items[i].id
+				} else {
+					newfilter="{{filters}}".concat(items[i].id)
+				}
+				items[i].href=newfilter;
+			}
+			var items=document.getElementsByClassName("sort-a");
+			for (var i=0; i<items.length; i++) {
+				if ("{{sorter}}"==items[i].id){
+					newfilter="/LunarLovelies/products/collections/".concat("{{collection_name}}/");
+				} else {
+					newfilter="/LunarLovelies/products/collections/".concat("{{collection_name}}/sort/").concat(items[i].id).concat("/");
+				}
+				if ("{{filters}}"!="None"){
+					newfilter=newfilter.concat("{{filters}}");
+				}
+				items[i].href=newfilter;
+			}
+		}
+
+	</script>	
+	{% endblock %}
+	</body>
+	footer>
+	{% block footer %}
+	{% include 'Lunar_Lovelies/footer.html' %}
+	{% endblock %}
+	</footer>
+</html>

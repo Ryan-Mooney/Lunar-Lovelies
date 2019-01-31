@@ -1,0 +1,20 @@
+{% extends 'llbase.html' %}
+<!DOCTYPE html>
+<html class="nkr-html">
+	<head>
+		{% block head %}
+		<title>Subscription Added</title>
+		{% endblock %}
+	</head>
+	{% block body %}
+	<body>
+		<h2>Thanks for your interest in our products!</h2>
+		<p>{{message}}</p>
+	</body>
+	{% endblock %}
+	<footer>
+	{% block footer %}
+	{% include 'Lunar_Lovelies/footer.html' %}
+	{% endblock %}
+	</footer>
+</html>

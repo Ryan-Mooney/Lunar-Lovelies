@@ -1,0 +1,30 @@
+{% extends 'llindexbase.html' %}
+<!DOCTYPE html>
+<html class="index-html" id="index-html">
+	<head>
+		{% block head %}
+		<title>Home</title>
+		{% endblock %}
+	</head>
+	{% block body %}
+	<body id="index-body">
+		<!--<img src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/iPqZZmF/swirly-particle-motion-background-loop-purple-bright_sw8exlai__F0000.png" class="home-splash">-->
+		<div class="home-bg home-splash">
+			<div class ="text-center home-callout container-fluid nkr-home-body">
+				<div class="home-text">
+					<p id="splash" style="text-align: center;">Lunar Lovelies</p>
+					<a href=/LunarLovelies/products><button type="submit" class="splash-button">View Products</button></a>
+				</div>	
+			</div>
+		</div>
+		<script>
+
+		</script>
+	{% endblock %}
+	</body>
+	<footer>
+	{% block footer %}
+	{% include 'Lunar_Lovelies/footer.html' %}
+	{% endblock %}
+	</footer>
+</html>
